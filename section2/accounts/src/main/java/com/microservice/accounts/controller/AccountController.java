@@ -25,7 +25,7 @@ import org.springframework.web.bind.annotation.*;
         description = "CRUD REST APIs in Sofi Bank to CREATE, UPDATE, FETCH AND DELETE account details"
 )
 @RestController
-@RequestMapping(path = "/api", produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(path = "/api/accounts", produces = MediaType.APPLICATION_JSON_VALUE)
 @RequiredArgsConstructor
 @Validated
 public class AccountController {
