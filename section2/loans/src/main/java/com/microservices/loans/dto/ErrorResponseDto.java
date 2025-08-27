@@ -3,6 +3,9 @@ package com.microservices.loans.dto;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import org.springframework.http.HttpStatus;
+
+import java.time.LocalDateTime;
 
 @Schema(
         name = "ErrorResponse",
@@ -20,7 +23,7 @@ public class ErrorResponseDto {
     @Schema(
             description = "Error code representing the error happened"
     )
-    private String errorCode;
+    private HttpStatus errorCode;
 
     @Schema(
             description = "Error message representing the error happened"
@@ -30,5 +33,5 @@ public class ErrorResponseDto {
     @Schema(
             description = "Time representing when the error happened"
     )
-    private String errorTime;
+    private LocalDateTime errorTime;
 }
