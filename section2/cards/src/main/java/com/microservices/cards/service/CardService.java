@@ -4,7 +4,7 @@ import com.microservices.cards.dto.CardDto;
 
 public interface CardService {
 
-    void create(String mobileNumber);
+    void createCard(String mobileNumber);
     CardDto fetchCard(String mobileNumber);
     boolean updated(CardDto cardDto);
     boolean deleteCard(String mobileNumber);

@@ -20,7 +20,7 @@ public class ServiceCardImpl implements CardService {
     private final CardMapper cardMapper;
 
     @Override
-    public void create(String mobileNumber) {
+    public void createCard(String mobileNumber) {
 
         checkExistingCard(mobileNumber);
         Card newCard = this.createNewCard(mobileNumber);
