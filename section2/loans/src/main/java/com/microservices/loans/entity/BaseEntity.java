@@ -1,12 +1,14 @@
 package com.microservices.loans.entity;
 
 import jakarta.persistence.Column;
+import jakarta.persistence.EntityListeners;
 import jakarta.persistence.MappedSuperclass;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
 @MappedSuperclass
+@EntityListeners(EntityListeners.class)
 @Setter
 @Getter
 @ToString
