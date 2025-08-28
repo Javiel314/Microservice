@@ -11,11 +11,12 @@ import com.microservices.cards.service.CardService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
 import java.util.Random;
 
 @Service
 @RequiredArgsConstructor
-public class ServiceCardImpl implements CardService {
+public class CardServiceImpl implements CardService {
     private final CardRepository cardRepository;
     private final CardMapper cardMapper;
 
@@ -46,13 +47,20 @@ public class ServiceCardImpl implements CardService {
 
     private Card createNewCard(String mobileNumber) {
         long randomCardNumber= 100000000000L + new Random().nextInt(900000000);
-        return this.cardMapper.mapToCard(mobileNumber, Long.toString(randomCardNumber), CardConstant.CREDIT_CARD,CardConstant.NEW_CARD_LIMIT,0, CardConstant.NEW_CARD_LIMIT);
+        return this.cardMapper.mapToCard(
+                mobileNumber,
+                Long.toString(randomCardNumber),
+                CardConstant.CREDIT_CARD,
+                CardConstant.NEW_CARD_LIMIT,
+                0,
+                CardConstant.NEW_CARD_LIMIT);
     }
 
     private void checkExistingCard(String mobileNumber){
-        this.cardRepository.fetchByMobileNumber(mobileNumber).orElseThrow(
-                ()-> new CardAlreadyExistException("Card already registered with given mobileNumber "+mobileNumber)
-        );
+       Optional<Card> existingCard = this.cardRepository.fetchByMobileNumber(mobileNumber);
+       if(existingCard.isPresent()){
+               throw new CardAlreadyExistException("Card already registered with given mobileNumber "+mobileNumber);
+       }
     }
 
     private Card getCard(String mobileNumber){
