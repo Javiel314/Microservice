@@ -1,0 +1,17 @@
+spring:
+  config:
+    activate:
+      on-profile: "qa"
+
+build:
+  info: "2.0"
+
+loans:
+  contact:
+    message: "Welcome to SofiBank accounts related qa APIs"
+    contactDetails:
+      name: "Javi - QA Lead"
+      email: "javio@sofibank.com"
+    onCallSupport:
+      -(555)555-7777
+      -(555)555-9999

@@ -14,4 +14,22 @@ spring:
     hibernate:
       ddl-auto: update
     show-sql: true
+  config:
+    import:
+      - "application_qa.yml"
+      - "application_prod.yml"
+    profiles:
+      active: "prod"
+
+build:
+  info: "3.0"
+
+cards:
+  message: "Welcome to SofiBank cards related dev APIs",
+  contactDetails:
+      name: "Javi - Developer"
+      email: "javie@sofibank.com"
+  onCallSupport:
+      -(555)555-1289 
+      -(555)555-8921
 

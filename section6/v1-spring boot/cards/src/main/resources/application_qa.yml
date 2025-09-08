@@ -1,0 +1,16 @@
+spring:
+  config:
+    activate:
+      on-profile: "qa"
+
+build:
+  info: "2.0"
+
+cards:
+  message: "Welcome to SofiBank cards related qa APIs",
+  contactDetails:
+    name: "Javi - QA Lead"
+    email: "javis@sofibank.com"
+  onCallSupport:
+    -(555)555_3331
+    -(555)555-2341
