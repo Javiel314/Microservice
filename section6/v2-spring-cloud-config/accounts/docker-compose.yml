@@ -1,0 +1,37 @@
+services:
+  accounts:
+    image: "javi314/accounts:s4"
+    container_name: accounts-ms
+    ports:
+      - "8080:8080"
+    deploy:
+      resources:
+        limits:
+          memory: 700m
+    networks:
+      - sofibank
+  loans:
+    image: "javi314/loans-ms"
+    container_name: "javi314/loans:s4"
+    ports:
+      - "8090:8090"
+    deploy:
+      resources:
+        limits:
+          memory: 700m
+    networks:
+      - sofibank
+  cards:
+    image: "javi314/cards:s4"
+    container_name: accounts-ms
+    ports:
+      - "9000:9000"
+    deploy:
+      resources:
+        limits:
+          memory: 700m
+    networks:
+      - sofibank
+networks:
+  sofibank:
+    driver: "bridge"

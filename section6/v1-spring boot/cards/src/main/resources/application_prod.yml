@@ -4,10 +4,10 @@ spring:
       on-profile: "prod"
 
 build:
-  info: "1.0"
+  version: "1.0"
 
 cards:
-  message: "Welcome to SofiBank cards related prod APIs",
+  message: "Welcome to SofiBank cards related prod APIs"
   contactDetails:
     name: "Javi - Product Owner"
     email: "javi@sofibank.com"
