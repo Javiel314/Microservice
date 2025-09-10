@@ -4,8 +4,8 @@ build:
 cards:
   message: "Welcome to SofiBank cards related dev APIs"
   contactDetails:
-      name: "Javi - Developer"
-      email: "javie@sofibank.com"
+    name: "Javi - Developer"
+    email: "javie@sofibank.com"
   onCallSupport:
       -(555)555-1289 
       -(555)555-8921

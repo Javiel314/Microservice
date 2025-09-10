@@ -1,12 +1,11 @@
 build:
-  info: "1.0"
+  version: "1.0"
 
 loans:
-  contact:
-    message: "Welcome to SofiBank accounts related prod APIs"
-    contactDetails:
-      name: "Javi - Product Owner"
-      email: "javis@sofibank.com"
-    onCallSupport:
+  message: "Welcome to SofiBank accounts related prod APIs"
+  contactDetails:
+    name: "Javi - Product Owner"
+    email: "javis@sofibank.com"
+  onCallSupport:
       -(555)555-5555
       -(555)555-444

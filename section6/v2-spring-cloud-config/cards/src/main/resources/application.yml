@@ -1,6 +1,12 @@
 server:
   port: 9000
 spring:
+  application:
+    name: "cards"
+  profiles:
+    active: "prod"
+  config:
+    import: "optional:configserver:http://localhost:8071/"
   datasource:
     url: jdbc:h2:mem:testdb
     driverClassName: org.h2.Driver
@@ -14,23 +20,10 @@ spring:
     hibernate:
       ddl-auto: update
     show-sql: true
-  config:
-    import:
-      - "application-qa.yml"
-      - "application-prod.yml"
-  profiles:
-    active:
-    - "prod"
 
-build:
-  version: "3.0"
 
-cards:
-  message: "Welcome to SofiBank cards related dev APIs"
-  contactDetails:
-      name: "Javi - Developer"
-      email: "javie@sofibank.com"
-  onCallSupport:
-      -(555)555-1289 
-      -(555)555-8921
-
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
