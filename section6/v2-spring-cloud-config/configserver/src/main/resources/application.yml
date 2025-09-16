@@ -4,6 +4,11 @@ spring:
   profiles:
     #active: native
     active: git
+  rabbitmq:
+    host: "localhost"
+    port: 5672
+    username: "guest"
+    password: "guest"
 
   cloud:
     config:
@@ -12,7 +17,9 @@ spring:
           #search-locations: "classpath:/config"
           #search-locations: "file:///Users//javielfi-sch//Documents//WEB dev//Microservices/config"
         git:
-          uri: "https://github.com/eazybytes/eazybytes-config.git"
+          uri: "https://github.com/Javiel314/microservices-config.git"
+          username: ${GIT_USERNAME}
+          password: ${GIT_PASSWORD}
           default-label: main
           timeout: 5
           clone-on-start: true
