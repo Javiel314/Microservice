@@ -43,11 +43,11 @@ services:
         condition: service_healthy
     extends:
       file: common-config.yml
-      service: microservice-configserver-service
+      service: microservice-configserver-config
 
   loans:
-    image: "javi314/loans-ms"
-    container_name: "javi314/loans:s6"
+    image: "javi314/loans:s6"
+    container_name: loans-ms
     ports:
       - "8090:8090"
     depends_on:
@@ -55,11 +55,11 @@ services:
         condition: service_healthy
     extends:
       file: common-config.yml
-      service: microservice-configserver-service
+      service: microservice-configserver-config
 
   cards:
     image: "javi314/cards:s6"
-    container_name: accounts-ms
+    container_name: cards-ms
     ports:
       - "9000:9000"
     depends_on:
@@ -67,7 +67,7 @@ services:
         condition: service_healthy
     extends:
       file: common-config.yml
-      service: microservice-configserver-service
+      service: microservice-configserver-config
 
 networks:
   sofibank:
