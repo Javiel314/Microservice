@@ -29,12 +29,10 @@ services:
       timeout: 5s
       retries: 10
       start_period: 10s
-    deploy:
-      resources:
-        limits:
-          memory: 700m
-    networks:
-      - sofibank
+    extends:
+      file: common-config.yml
+      service: microservice-base-config
+
   accounts:
     image: "javi314/accounts:s6"
     container_name: accounts-ms
@@ -43,15 +41,10 @@ services:
     depends_on:
       configserver:
         condition: service_healthy
-    deploy:
-      resources:
-        limits:
-          memory: 700m
-    networks:
-      - sofibank
-    environment:
-      SPRING_CONFIG_IMPORT: "configserver:http://configserver:8071/"
-      SRING_PROFILES_ACTIVE: default
+    extends:
+      file: common-config.yml
+      service: microservice-configserver-service
+
   loans:
     image: "javi314/loans-ms"
     container_name: "javi314/loans:s6"
@@ -60,15 +53,10 @@ services:
     depends_on:
       configserver:
         condition: service_healthy
-    deploy:
-      resources:
-        limits:
-          memory: 700m
-    networks:
-      - sofibank
-    environment:
-      SPRING_CONFIG_IMPORT: "configserver:http://configserver:8071/"
-      SRING_PROFILES_ACTIVE: default
+    extends:
+      file: common-config.yml
+      service: microservice-configserver-service
+
   cards:
     image: "javi314/cards:s6"
     container_name: accounts-ms
@@ -77,15 +65,10 @@ services:
     depends_on:
       configserver:
         condition: service_healthy
-    deploy:
-      resources:
-        limits:
-          memory: 700m
-    networks:
-      - sofibank
-    environment:
-      SPRING_CONFIG_IMPORT: "configserver:http://configserver:8071/"
-      SRING_PROFILES_ACTIVE: default
+    extends:
+      file: common-config.yml
+      service: microservice-configserver-service
+
 networks:
   sofibank:
     driver: "bridge"
