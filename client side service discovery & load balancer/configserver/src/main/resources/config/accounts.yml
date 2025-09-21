@@ -1,0 +1,12 @@
+build:
+  version: "3.0"
+
+accounts:
+  message: "Welcome to SofiBank accounts related local APIs"
+  contactDetails:
+    name: "Javi - Developer"
+    email: "javi@sofibank.com"
+  onCallSupport:
+    -(555)555-1234
+    -(555)555-4321
+
