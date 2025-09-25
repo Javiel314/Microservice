@@ -2,16 +2,14 @@ package com.microservices.cards.entity;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 @Entity
 @Getter
 @Setter
 @ToString
 @AllArgsConstructor
+@NoArgsConstructor
 @Table(name = "cards")
 public class Card extends BaseEntity {
 

@@ -43,7 +43,7 @@ public class AccountServiceImpl implements AccountService {
     public CustomerDto fetchAccount(String mobileNumber) {
         Customer fetchedCustomer = this.getCustomer(mobileNumber);
 
-       AccountDto customerAccountDto = getCustomersAccountDto(fetchedCustomer.getCustomerId());
+        AccountDto customerAccountDto = getCustomersAccountDto(fetchedCustomer.getCustomerId());
 
         return customerMapper.mapToCustomerDto(fetchedCustomer, customerAccountDto);
     }
