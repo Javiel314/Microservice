@@ -1,4 +1,4 @@
-package com.example.gatewayserver;
+package com.microservices.gatewayserver;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -20,18 +20,18 @@ public class GatewayserverApplication {
 		return routeLocatorBuilder.routes()
 				.route(p-> p
 						.path("/sofibank/accounts/**")
-						.filters(f -> f.rewritePath("/sofibank/accounts/(?<segment>.*", "/${segment}")
+						.filters(f -> f.rewritePath("/sofibank/accounts/(?<segment>.*)", "/${segment}")
 								.addResponseHeader("X-Response-Time", LocalDateTime.now().toString()))
 
 						.uri("lb://ACCOUNTS"))
 				.route(p-> p
 						.path("/sofibank/loans/**")
-						.filters(f -> f.rewritePath("/sofibank/loans/(?<segment>.*", "/${segment}")
+						.filters(f -> f.rewritePath("/sofibank/loans/(?<segment>.*)", "/${segment}")
 								.addResponseHeader("X-Response-Time", LocalDateTime.now().toString()))
 						.uri("lb://LOANS"))
 				.route(p-> p
 						.path("/sofibank/cards/**")
-						.filters(f -> f.rewritePath("/sofibank/cards/(?<segment>.*", "/${segment}")
+						.filters(f -> f.rewritePath("/sofibank/cards/(?<segment>.*)", "/${segment}")
 								.addResponseHeader("X-Response-Time", LocalDateTime.now().toString()))
 						.uri("lb://CARDS"))
 				.build();
