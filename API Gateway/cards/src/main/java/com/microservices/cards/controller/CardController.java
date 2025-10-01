@@ -15,6 +15,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Pattern;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
@@ -31,6 +32,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping(path = "/api", produces = MediaType.APPLICATION_JSON_VALUE)
 @Validated
 @RequiredArgsConstructor
+@Slf4j
 public class CardController {
 
     private final CardService cardService;
@@ -40,7 +42,7 @@ public class CardController {
     @Value("${build.version}")
     private String buildInfo;
 
-
+    private final String CORRELATION_ID = "sofiBank-correlation-id";
 
     @Operation(
             summary = "Create Card REST API",
@@ -89,9 +91,11 @@ public class CardController {
             )
     })
     @GetMapping("/fetch")
-    public ResponseEntity<CardDto> fetchCard (@Valid @RequestParam
+    public ResponseEntity<CardDto> fetchCard ( @RequestHeader (CORRELATION_ID) String correlationId,
+                                                  @RequestParam
                                                   @Pattern(regexp ="(^$|[0-9]{10})", message = "Mobile number must be 10 digits")
                                                   String mobileNumber){
+        log.debug(CORRELATION_ID + "found: {}", correlationId);
         CardDto cardDto = cardService.fetchCard(mobileNumber);
 
         return ResponseEntity

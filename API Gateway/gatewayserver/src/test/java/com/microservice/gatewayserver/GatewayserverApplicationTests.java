@@ -1,4 +1,4 @@
-package com.microservices.gatewayserver;
+package com.microservice.gatewayserver;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

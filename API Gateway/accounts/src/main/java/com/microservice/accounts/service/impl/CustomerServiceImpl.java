@@ -25,29 +25,29 @@ public class CustomerServiceImpl implements CustomerService {
     private final CustomerDetailsMapper customerDetailsMapper;
 
     @Override
-    public CustomerDetailsDto fetchCustomerDetails(String mobileNumber) {
+    public CustomerDetailsDto fetchCustomerDetails(String correlationId, String mobileNumber) {
 
         Customer fetchedCustomer = this.serviceSupport.getCustomer(mobileNumber);
         log.error(fetchedCustomer.toString());
 
         AccountDto customerAccountDto = this.serviceSupport.getCustomersAccountDto(fetchedCustomer.getCustomerId());
         log.error(customerAccountDto.toString());
-        LoanDto loanDto = this.fetchLoansDetails(mobileNumber);
+        LoanDto loanDto = this.fetchLoansDetails(correlationId, mobileNumber);
 
-        CardDto cardDto = this.fetchCardsDetails(mobileNumber);
+        CardDto cardDto = this.fetchCardsDetails(correlationId, mobileNumber);
 
 
         return this.customerDetailsMapper.mapToCustomerDetailsDto(fetchedCustomer,customerAccountDto,loanDto,cardDto);
     }
 
-    private LoanDto fetchLoansDetails(String mobileNumber) {
-        ResponseEntity<LoanDto> loanDtoResponseEntity= loansFeignClient.fetchLoanDetails(mobileNumber);
+    private LoanDto fetchLoansDetails(String correlationId, String mobileNumber) {
+        ResponseEntity<LoanDto> loanDtoResponseEntity= loansFeignClient.fetchLoanDetails(correlationId, mobileNumber);
 
         return loanDtoResponseEntity.getBody();
     }
 
-    private CardDto fetchCardsDetails(String mobileNumber) {
-        ResponseEntity<CardDto> cardDtoResponseEntity= cardsFeignClient.fetchCard(mobileNumber);
+    private CardDto fetchCardsDetails(String correlationId, String mobileNumber) {
+        ResponseEntity<CardDto> cardDtoResponseEntity= cardsFeignClient.fetchCard(correlationId, mobileNumber);
 
         return cardDtoResponseEntity.getBody();
     }

@@ -1,4 +1,4 @@
-package com.microservices.gatewayserver.filter;
+package com.microservice.gatewayserver.filter;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

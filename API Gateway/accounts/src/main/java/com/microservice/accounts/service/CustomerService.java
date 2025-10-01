@@ -6,5 +6,5 @@ import org.springframework.stereotype.Service;
 @Service
 public interface CustomerService {
 
-    CustomerDetailsDto fetchCustomerDetails(String mobileNumber);
+    CustomerDetailsDto fetchCustomerDetails(String correlationId, String mobileNumber);
 }

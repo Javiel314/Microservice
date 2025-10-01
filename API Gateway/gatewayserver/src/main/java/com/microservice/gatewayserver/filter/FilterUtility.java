@@ -1,4 +1,4 @@
-package com.microservices.gatewayserver.filter;
+package com.microservice.gatewayserver.filter;
 
 import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Component;
@@ -22,11 +22,12 @@ public class FilterUtility {
         }
     }
 
-    public ServerWebExchange setRequestHeader(ServerWebExchange exchange, String name, String value) {
-        return exchange.mutate().request(exchange.getRequest().mutate().header(name, value).build()).build();
-    }
-
     public ServerWebExchange setCorrelationId(ServerWebExchange exchange, String correlationId) {
         return this.setRequestHeader(exchange, CORRELATION_ID, correlationId);
     }
+
+    private ServerWebExchange setRequestHeader(ServerWebExchange exchange, String name, String value) {
+        return exchange.mutate().request(exchange.getRequest().mutate().header(name, value).build()).build();
+    }
+
 }
