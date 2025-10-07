@@ -42,7 +42,6 @@ public class CustomerServiceImpl implements CustomerService {
 
     private LoanDto fetchLoansDetails(String correlationId, String mobileNumber) {
         ResponseEntity<LoanDto> loanDtoResponseEntity= loansFeignClient.fetchLoanDetails(correlationId, mobileNumber);
-
         return loanDtoResponseEntity.getBody();
     }
 
