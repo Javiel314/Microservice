@@ -24,6 +24,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
+
 @Tag(
         name = "CRUD REST APIs for Loans in EazyBank",
         description = "CRUD REST APIs in EazyBank to CREATE, UPDATE, FETCH AND DELETE loan details"
@@ -248,6 +250,7 @@ public class LoanController {
 
     @GetMapping("/contact-info")
     public ResponseEntity<LoanContactInfoDto> getContactInfo(){
+        log.debug("Loan Controller contact info invoked {}", LocalDateTime.now());
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(this.loanContactInfoDto);
