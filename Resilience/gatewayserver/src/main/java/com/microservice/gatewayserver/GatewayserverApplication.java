@@ -50,11 +50,11 @@ public class GatewayserverApplication {
 
 	@Bean
 	public RedisRateLimiter redisRateLimiter(){
-		return new RedisRateLimiter(1,1,1);
+		return new RedisRateLimiter(1,5,2);
 	}
 
 	@Bean
-	KeyResolver userKeyResolver() {
+	public KeyResolver userKeyResolver() {
 		return exchange -> Mono.justOrEmpty(exchange.getRequest()
 				.getHeaders()
 				.getFirst("user"))

@@ -6,6 +6,7 @@ import com.microservice.accounts.dto.CustomerDto;
 import com.microservice.accounts.dto.ErrorResponseDto;
 import com.microservice.accounts.dto.ResponseDto;
 import com.microservice.accounts.service.AccountService;
+import io.github.resilience4j.ratelimiter.annotation.RateLimiter;
 import io.github.resilience4j.retry.annotation.Retry;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -18,6 +19,7 @@ import jakarta.validation.constraints.Pattern;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Fallback;
 import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -224,12 +226,21 @@ public class AccountController {
                     )
             )
     })
+
+    @RateLimiter(name="getJavaVersion", fallbackMethod = "getJavaVersionFallback")
     @GetMapping("/java-version")
     public ResponseEntity<String> getJavaVersion(){
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(this.environment.getProperty("JAVA_HOME"));
     }
+
+    public ResponseEntity<String> getJavaVersionFallback(Throwable throwable){
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body("Please try again after few seconds");
+    }
+
 
     @Operation(
             summary = "Get contact info",
