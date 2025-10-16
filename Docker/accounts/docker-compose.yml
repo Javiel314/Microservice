@@ -1,6 +1,6 @@
 services:
   accounts:
-    image: "javi314/accounts:s4"
+    image: "javi314/accounts:v4"
     container_name: accounts-ms
     ports:
       - "8080:8080"
@@ -12,7 +12,7 @@ services:
       - sofibank
   loans:
     image: "javi314/loans-ms"
-    container_name: "javi314/loans:s4"
+    container_name: "javi314/loans:v4"
     ports:
       - "8090:8090"
     deploy:
@@ -22,7 +22,7 @@ services:
     networks:
       - sofibank
   cards:
-    image: "javi314/cards:s4"
+    image: "javi314/cards:v4"
     container_name: accounts-ms
     ports:
       - "9000:9000"
