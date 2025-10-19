@@ -80,6 +80,17 @@ services:
       file: common-config.yml
       service: network-deploy-service
 
+  prometheus:
+    image: prom/prometheus:v3.1.0
+    container_name: prometheus
+    ports:
+      - "9090:9090"
+    volumes:
+      - ../observability/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+    extends:
+      file: common-config.yml
+      service: network-deploy-service
+
   grafana:
     image: grafana/grafana:latest
     environment:
@@ -222,7 +233,7 @@ services:
       start_period: 10s
     extends:
       file: common-config.yml
-      service: microservice-base-config
+      service: microservice-configserver-config
 
 
   accounts:
@@ -296,8 +307,6 @@ services:
       cards:
         condition: service_healthy
       loans:
-        condition: service_healthy
-      redis:
         condition: service_healthy
     extends:
       file: common-config.yml
