@@ -95,8 +95,9 @@ public class CardController {
                                                   @RequestParam
                                                   @Pattern(regexp ="(^$|[0-9]{10})", message = "Mobile number must be 10 digits")
                                                   String mobileNumber){
-        log.debug(CORRELATION_ID + "found: {}", correlationId);
+        log.debug("fetchCard method started");
         CardDto cardDto = cardService.fetchCard(mobileNumber);
+        log.debug("fetchCard method ended");
 
         return ResponseEntity
                 .status(HttpStatus.OK)
