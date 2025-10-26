@@ -22,8 +22,8 @@ public class SecurityConfig {
     public SecurityWebFilterChain springSecurityFilterChain(ServerHttpSecurity serverHttpSecurity) {
         serverHttpSecurity.authorizeExchange(exchanges -> exchanges.pathMatchers(HttpMethod.GET).permitAll()
                         .pathMatchers("/sofibank/accounts/**").hasRole("ACCOUNTS")
-                        .pathMatchers("/sosibank/cards/**").hasRole("CARDS")
-                        .pathMatchers("/sofbank/loans/**").hasRole("LOANS"))
+                        .pathMatchers("/sofibank/cards/**").hasRole("CARDS")
+                        .pathMatchers("/sofibank/loans/**").hasRole("LOANS"))
                 .oauth2ResourceServer(oAuth2ResourceServerSpec -> oAuth2ResourceServerSpec
                         .jwt(jwtSpec -> jwtSpec.jwtAuthenticationConverter(grantedAuthoritiesExtractor())));
         serverHttpSecurity.csrf(csrfSpec -> csrfSpec.disable());
