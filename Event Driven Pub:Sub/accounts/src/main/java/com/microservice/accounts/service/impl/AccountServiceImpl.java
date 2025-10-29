@@ -2,6 +2,7 @@ package com.microservice.accounts.service.impl;
 
 import com.microservice.accounts.constants.AccountConstants;
 import com.microservice.accounts.dto.AccountDto;
+import com.microservice.accounts.dto.AccountsMsgDto;
 import com.microservice.accounts.dto.CustomerDto;
 import com.microservice.accounts.entity.Account;
 import com.microservice.accounts.entity.Customer;
@@ -13,6 +14,8 @@ import com.microservice.accounts.repository.AccountRepository;
 import com.microservice.accounts.repository.CustomerRepository;
 import com.microservice.accounts.service.AccountService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.cloud.stream.function.StreamBridge;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -21,12 +24,14 @@ import java.util.Random;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class AccountServiceImpl implements AccountService {
 
    private final AccountRepository accountRepository;
    private final CustomerRepository customerRepository;
    private final CustomerMapper customerMapper;
    private final AccountMapper accountMapper;
+   private final StreamBridge streamBridge;
 
     @Override
     public void create(CustomerDto customerDto){
@@ -35,7 +40,9 @@ public class AccountServiceImpl implements AccountService {
         Customer customer = this.mapToCustomer(customerDto);
 
         Customer createdCustomer = this.save(customer);
-        this.save(createNewAccount(createdCustomer));
+        Account savedAccount= this.createNewAccount(createdCustomer);
+        this.save(savedAccount);
+        this.sendCommunication(savedAccount,createdCustomer);
 
     }
 
@@ -144,6 +151,13 @@ public class AccountServiceImpl implements AccountService {
         this.save(customerToUpdate);
     }
 
+    private void sendCommunication( Account account, Customer customer){
+        var accountsMsgDto = new AccountsMsgDto( account.getAccountNumber(), customer.getName(),
+                customer.getEmail(), customer.getMobileNumber());
+        log.info("Sending Communication request for the details: {}", accountsMsgDto);
+        var result = streamBridge.send("senCommunication_ou-0", accountsMsgDto);
+        log.info("Is the commucication succesfully prossed ?: {}", result);
 
+    }
 
 }
