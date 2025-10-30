@@ -83,6 +83,20 @@ public class AccountServiceImpl implements AccountService {
         return isDeleted;
     }
 
+    @Override
+    public boolean updateCommunicationStatus(Long accountNumber) {
+        boolean isUpdated = false;
+
+        if(accountNumber != null){
+            Account accountToUpdate  = this.getAccount(accountNumber);
+
+            accountToUpdate.setCommunicationSw(true);
+            this.save(accountToUpdate);
+            isUpdated= true;
+        }
+        return isUpdated;
+    }
+
     private Account createNewAccount(Customer customer) {
         Account newAccount = new Account();
         newAccount.setCustomerId(customer.getCustomerId());
@@ -152,11 +166,11 @@ public class AccountServiceImpl implements AccountService {
     }
 
     private void sendCommunication( Account account, Customer customer){
-        var accountsMsgDto = new AccountsMsgDto( account.getAccountNumber(), customer.getName(),
+        AccountsMsgDto accountsMsgDto = new AccountsMsgDto( account.getAccountNumber(), customer.getName(),
                 customer.getEmail(), customer.getMobileNumber());
         log.info("Sending Communication request for the details: {}", accountsMsgDto);
-        var result = streamBridge.send("senCommunication_ou-0", accountsMsgDto);
-        log.info("Is the commucication succesfully prossed ?: {}", result);
+        Boolean result = streamBridge.send("senCommunication_ou-0", accountsMsgDto);
+        log.info("Is the communication successfully triggered ?: {}", result);
 
     }
 

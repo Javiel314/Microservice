@@ -1,7 +1,7 @@
 services:
 
   keycloak:
-    image: quay.io/keycloak/keycloak:26.4.0
+    image: quay.io/keycloak/keycloak:latest
     container_name: keycloak
     ports:
       - "127.0.0.1:7080:8080"

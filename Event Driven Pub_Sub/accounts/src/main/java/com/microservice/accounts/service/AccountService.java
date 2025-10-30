@@ -8,4 +8,5 @@ public interface AccountService {
     CustomerDto fetchAccount(String email);
     boolean updateAccount(CustomerDto customerDto);
     boolean deleteAccount(String mobileNumber);
+    boolean updateCommunicationStatus(Long accountNumber);
 }

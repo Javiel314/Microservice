@@ -9,9 +9,11 @@ spring:
       definition: email|sms
     stream:
       bindings:
-        emailsms-in-0:
+        emailsms-in-O:
           destination: send-communication
           group: ${spring.application.name}
+        emailsms-out-O:
+          destination: communication-sent
   rabbit:
     host: localhost
     port: 5672
