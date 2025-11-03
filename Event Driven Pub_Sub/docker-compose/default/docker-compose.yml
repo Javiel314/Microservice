@@ -1,4 +1,19 @@
 services:
+  rabbit:
+    image: rabbitmq:4.0-management
+    hostname: rabbitmq
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    healthcheck:
+      test: rabbitmq-diagnostics check_port_connectivity
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 5s
+    extends:
+      file: common-config.yml
+      service: network-deploy-service
 
   keycloak:
     image: quay.io/keycloak/keycloak:26.4.0
@@ -230,7 +245,7 @@ services:
 
 
   configserver:
-    image: "javi314/configserver:v11"
+    image: "javi314/configserver:v13"
     container_name: configserver-ms
     ports:
       - "8071:8071"
@@ -247,7 +262,7 @@ services:
       OTEL_SERVICE_NAME: "configserver"
 
   eurekaserver:
-    image: "javi314/eurekaserver:v11"
+    image: "javi314/eurekaserver:v13"
     container_name: eurekaserver-ms
     ports:
       - "8070:8070"
@@ -268,7 +283,7 @@ services:
 
 
   accounts:
-    image: "javi314/accounts:v12"
+    image: "javi314/accounts:v13"
     container_name: accounts-ms
     healthcheck:
       test: "curl --fail --silent localhost:8080/actuator/health/readiness | grep UP || exit 1"
@@ -281,14 +296,17 @@ services:
         condition: service_healthy
       eurekaserver:
         condition: service_healthy
+      rabbit:
+        condition: service_healthy
     extends:
       file: common-config.yml
       service: microservice-eureka-config
     environment:
       OTEL_SERVICE_NAME: "accounts"
+      SPRING_RABBITMQ_HOT: "rabbit"
 
   loans:
-    image: "javi314/loans:v12"
+    image: "javi314/loans:v13"
     container_name: loans-ms
     healthcheck:
       test: "curl --fail --silent localhost:8090/actuator/health/readiness | grep UP || exit 1"
@@ -308,7 +326,7 @@ services:
       OTEL_SERVICE_NAME: "loans"
 
   cards:
-    image: "javi314/cards:v12"
+    image: "javi314/cards:v13"
     container_name: cards-ms
     healthcheck:
       test: "curl --fail --silent localhost:9000/actuator/health/readiness | grep UP || exit 1"
@@ -328,7 +346,7 @@ services:
       OTEL_SERVICE_NAME: "cards"
 
   gatewayserver:
-    image: "javi314/gatewayserver:v12"
+    image: "javi314/gatewayserver:v13"
     container_name: gatewayserver-ms
     ports:
       - "8072:8072"
@@ -345,6 +363,18 @@ services:
     environment:
       OTEL_SERVICE_NAME: "gatewayserver"
       SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_JWK-SET-URI: "http://keycloak:8080/realms/master/protocol/openid-connect/certs"
+
+  message:
+    image: "javi314/message:v13"
+    container_name: message-ms
+    depends_on:
+      rabbit:
+        condition: service_healthy
+    environment:
+      SPRING_RABBITMQ_HOST: "rabbit"
+    extends:
+      file: common-config.yml
+      service: network-deploy-service
 
 networks:
   sofibank:
